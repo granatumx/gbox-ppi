@@ -1,4 +1,4 @@
-> `gbox-multitool` is a gbox that provides a number of original gboxes from R.
+> `gbox-ppi` is a gbox that provides protein-protein interaction capability.
 
 
 
@@ -30,7 +30,7 @@ pulled if they do not exist locally on the system. Convenience scripts are provi
 
 ```
 $ gx run.sh                                         # Will start the database, taskrunner, and webapp
-$ gx installGbox.sh granatumx/gbox-multitool:1.0.0  # Install this gbox
+$ gx installGbox.sh granatumx/gbox-ppi:1.0.0  # Install this gbox
 
 # Now go to http://localhost:34567 and see this gbox installed when you add a step.
 ```

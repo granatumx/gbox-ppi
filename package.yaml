@@ -1,5 +1,5 @@
 # this name will be displayed in the package installation
-id: Granatum2 Multi-Tool (written in R/Python) {VER}
+id: PPI-{VER}
 
 # this meta field provides the default meta for all gboxes
 # for example, if `./yamls/DifferentialExpression.yaml` doesn't
@@ -12,9 +12,4 @@ meta:
 
 # an array of all the yaml specs for the gboxes
 gboxes:
-  - ./yamls/DifferentialExpression.yaml
-  - ./yamls/FGSEA.yaml
-  - ./yamls/GeneFiltering.yaml
-  - ./yamls/MonoclePseudotime.yaml
-  - ./yamls/Normalization.yaml
   - ./yamls/PPI.yaml

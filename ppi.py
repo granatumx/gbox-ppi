@@ -190,55 +190,63 @@ def main():
     print(g_subgraph) # TEST
     print(g_subgraph.degree()) # TEST
     # Use vertices with at least one edge (degree > 0)
-    g_seq = g_subgraph.vs.select(_degree_gt=0)
+
+    g_seq = g_subgraph.vs(_degree_gt=0)
     g_subgraph_degree_gt_0 = g_subgraph.induced_subgraph(g_seq)
-    # kk_layout = g_subgraph.layout("kamada_kawai")
-    # plot_of_all = ig.plot(g_subgraph, "ppi_kk_plot_deg_all.png", layout=kk_layout, bbox=(1000,1000), legend=(1,2,3))
-    kk_layout = g_subgraph_degree_gt_0.layout("kamada_kawai")
-    plot = ig.plot(g_subgraph_degree_gt_0, "ppi_kk_plot_deg_gt_0.png", layout=kk_layout, bbox=(1000,1000))
-    context = cairo.Context(plot.surface) # Get plot surface for manipulation
-    ## Add title
-    #context.set_font_size(24)
-    #drawer = ig.drawing.text.TextDrawer(context, "PPI network", halign=ig.drawing.text.TextDrawer.CENTER)
-    #drawer.draw_at(300, 50, width=400)
-    # Add legend
-    # This part could use improvement: consider switching to put the igraph
-    # into matplotlib, scale to absolute min/max, and include tick marks
-    pattern = cairo.LinearGradient(0.0, 100.0, 0.0, 200.0) # cairo.LinearGradient(x0, y0, x1, y1)
-    pattern.add_color_stop_rgba(0.0, 0, 0, 0, 0.9) 
-    pattern.add_color_stop_rgba(1.0, 1, 1, 1, 0.9) 
-    context.rectangle(900, 100, 20, 100)  # Rectangle(x0, y0, x1, y1)
-    context.set_source(pattern)
-    context.fill() 
-    context = cairo.Context(plot.surface) # Get plot surface for manipulation
-    context.set_font_size(20)
-    drawer = ig.drawing.text.TextDrawer(context,
-      score_max,
-      valign=ig.drawing.text.TextDrawer.BOTTOM,
-      halign=ig.drawing.text.TextDrawer.CENTER)
-    drawer.draw_at(900, 95, width=20)
-    drawer = ig.drawing.text.TextDrawer(context,
-      score_min,
-      valign=ig.drawing.text.TextDrawer.TOP,
-      halign=ig.drawing.text.TextDrawer.CENTER)
-    drawer.draw_at(900, 205, width=20)
 
     
-    mpl.use("cairo")
-    # Create the figure
-    fig = plt.figure()
+    if g_subgraph_degree_gt_0.ecount() == 0:
+        # If the graph is empty there are no protein interactions
+        
+        fig = plt.figure()
+        ax = fig.add_subplot(111)
+        ax.axis('off')
+        ax.text(0.1, 0.5, 'No protein interactions found')
+        gn.add_current_figure_to_results(description='PPI-plot')
+        gn.commit()
 
-    # Create a basic plot
-    axes = fig.add_subplot(111)
-    graph_artist = GraphArtist(g_subgraph_degree_gt_0, (1000, 1000, 150, 150), layout=kk_layout)
-    graph_artist.set_zorder(float('inf'))
-    axes.artists.append(graph_artist)
-    axes.axis('off')
-
-    #plot.show()
+    else:
     
-    gn.add_current_figure_to_results(description="PPI-plot")
-    gn.commit()
+        kk_layout = g_subgraph_degree_gt_0.layout("kamada_kawai")
+        plot = ig.plot(g_subgraph_degree_gt_0, "ppi_kk_plot_deg_gt_0.png", layout=kk_layout, bbox=(1000,1000))
+        context = cairo.Context(plot.surface) # Get plot surface for manipulation
+
+        # Add title and legend
+        # This part could use improvement: consider switching to put the igraph
+        # into matplotlib, scale to absolute min/max, and include tick marks
+        pattern = cairo.LinearGradient(0.0, 100.0, 0.0, 200.0) # cairo.LinearGradient(x0, y0, x1, y1)
+        pattern.add_color_stop_rgba(0.0, 0, 0, 0, 0.9) 
+        pattern.add_color_stop_rgba(1.0, 1, 1, 1, 0.9) 
+        context.rectangle(900, 100, 20, 100)  # Rectangle(x0, y0, x1, y1)
+        context.set_source(pattern)
+        context.fill() 
+        context = cairo.Context(plot.surface) # Get plot surface for manipulation
+        context.set_font_size(20)
+        drawer = ig.drawing.text.TextDrawer(context,
+          score_max,
+          valign=ig.drawing.text.TextDrawer.BOTTOM,
+          halign=ig.drawing.text.TextDrawer.CENTER)
+        drawer.draw_at(900, 95, width=20)
+        drawer = ig.drawing.text.TextDrawer(context,
+          score_min,
+          valign=ig.drawing.text.TextDrawer.TOP,
+          halign=ig.drawing.text.TextDrawer.CENTER)
+        drawer.draw_at(900, 205, width=20)
+
+        
+        mpl.use("cairo")
+        # Create the figure
+        fig = plt.figure()
+
+        # Create a basic plot
+        axes = fig.add_subplot(111)
+        graph_artist = GraphArtist(g_subgraph_degree_gt_0, (1000, 1000, 150, 150), layout=kk_layout)
+        graph_artist.set_zorder(float('inf'))
+        axes.artists.append(graph_artist)
+        axes.axis('off')
+        
+        gn.add_current_figure_to_results(description="PPI-plot")
+        gn.commit()
 
 # Main body
 if __name__ == '__main__':
