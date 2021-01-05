@@ -7,8 +7,8 @@ id: PPI-{VER}
 # to the one here.
 meta:
   maintainer:
-    name: Thomas K. Wolfgruber
-    email: twolfgruber@cc.hawaii.edu
+    name: GranatumX
+    email: lana.garmire.group@gmail.com
 
 # an array of all the yaml specs for the gboxes
 gboxes:

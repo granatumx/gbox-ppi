@@ -165,8 +165,8 @@ def main():
     for index, row in gene_pairs.iterrows():
         gene_A = row['Official Symbol Interactor A']
         gene_B = row['Official Symbol Interactor B']
-        organism_A = row['Organism Name Interactor A']
-        organism_B = row['Organism Name Interactor B']
+        organism_A = row['Organism ID Interactor A']
+        organism_B = row['Organism ID Interactor B']
         if ((organism_A == species_code) and
           (organism_A == organism_B)):
             # if ((gene_A in gene_score_dict) and

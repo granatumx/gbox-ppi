@@ -17,10 +17,10 @@ meta:
   description: |
     This protein-protein ineteraction (PPI) network module displays connections
     between top differentially expressed genes, according to publications as
-    compiled by BioGRID.
+    compiled by BioGRID. Authors - Thomas Wolfgruber
 endpoints:
   backend:
-    cmd: python3 ./ppi.py --top_scoring_genes=100 --ppi_table ./BIOGRID-ALL-4.1.190.tab3.zip
+    cmd: python3 ./ppi.py --top_scoring_genes=100 --ppi_table ./BIOGRID.zip
     type: docker
     image: {GBOX}
 frontend:
